@@ -118,27 +118,24 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // DATOS PASADOS DESDE LARAVEL A JS
-        const labels7Days = @json($chartLabels);
-        const data7Days = @json($chartData);
-        
-        const statusData = {
-            programada: {{ $statusCounts['programada'] }},
-            confirmada: {{ $statusCounts['confirmada'] }},
-            completada: {{ $statusCounts['completada'] }},
-            cancelada: {{ $statusCounts['cancelada'] }},
+        // 1. Pasamos los datos de PHP a JS de forma limpia
+        // Al usar @json una sola vez, evitamos los errores de sintaxis en el editor
+        const chartData = {
+            labels: @json($chartLabels),
+            data: @json($chartData),
+            status: @json($statusCounts)
         };
 
-        // 1. Gráfico de Barras (Últimos 7 días)
+        // 2. Gráfico de Barras (Últimos 7 días)
         const ctxLine = document.getElementById('citasUltimos7DiasChart').getContext('2d');
         new Chart(ctxLine, {
             type: 'bar',
             data: {
-                labels: labels7Days,
+                labels: chartData.labels,
                 datasets: [{
                     label: 'Citas por día',
-                    data: data7Days,
-                    backgroundColor: 'rgba(255, 193, 7, 0.2)', // Color amarillo/dorado suave
+                    data: chartData.data,
+                    backgroundColor: 'rgba(255, 193, 7, 0.2)',
                     borderColor: '#ffc107',
                     borderWidth: 2,
                     borderRadius: 5,
@@ -154,7 +151,7 @@
             }
         });
 
-        // 2. Gráfico de Torta (Estados)
+        // 3. Gráfico de Torta (Estados)
         const ctxPie = document.getElementById('estadoCitasChart').getContext('2d');
         new Chart(ctxPie, {
             type: 'doughnut',
@@ -162,10 +159,10 @@
                 labels: ['Programada', 'Confirmada', 'Completada', 'Cancelada'],
                 datasets: [{
                     data: [
-                        statusData.programada, 
-                        statusData.confirmada, 
-                        statusData.completada, 
-                        statusData.cancelada
+                        chartData.status.programada || 0, 
+                        chartData.status.confirmada || 0, 
+                        chartData.status.completada || 0, 
+                        chartData.status.cancelada || 0
                     ],
                     backgroundColor: [
                         '#0dcaf0', // Info (Programada)
