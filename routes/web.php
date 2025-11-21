@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController; // <--- Importamos el controlador Admi
 use App\Http\Controllers\ServiceController; // <--- Importamos ServiceController
 use App\Http\Controllers\AppointmentController; // <-- nueva importación si no existe
 use App\Http\Controllers\BarberController; // <--- No olvides importar esto arriba
+use App\Http\Controllers\BarberManagementController; // <--- Agregamos el nuevo controlador para CRUD de barberos
 use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Service; // <--- Import importante para traer los servicios
@@ -37,16 +38,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Ver lista (Dashboard)
     Route::get('/admin/panel', [AdminController::class, 'index'])->name('admin.panel');
     
-    // Crear Barbero (Formulario)
-    Route::get('/admin/users/create', [AdminController::class, 'create'])->name('admin.users.create');
-    
-    // Guardar Barbero (Acción)
-    Route::post('/admin/users', [AdminController::class, 'store'])->name('admin.users.store');
-    
-    // RUTAS PARA EDITAR USUARIOS
-    Route::get('/admin/users/{id}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
-    Route::put('/admin/users/{id}', [AdminController::class, 'update'])->name('admin.users.update');
-    Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
+    // GESTIÓN DE BARBEROS (CRUD COMPLETO)
+    Route::get('/admin/barberos', [BarberManagementController::class, 'index'])->name('admin.barbers.index');
+    Route::post('/admin/barberos', [BarberManagementController::class, 'store'])->name('admin.barbers.store');
+    Route::put('/admin/barberos/{id}', [BarberManagementController::class, 'update'])->name('admin.barbers.update');
+    Route::delete('/admin/barberos/{id}', [BarberManagementController::class, 'destroy'])->name('admin.barbers.destroy');
     
     // GESTIÓN DE SERVICIOS
     Route::get('/admin/services', [ServiceController::class, 'index'])->name('admin.services.index');
