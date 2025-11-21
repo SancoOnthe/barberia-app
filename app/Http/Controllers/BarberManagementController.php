@@ -25,6 +25,7 @@ class BarberManagementController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'cedula' => 'required|string', // <--- NUEVO CAMPO
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string',
             'password' => 'required|string|min:8',
@@ -34,11 +35,14 @@ class BarberManagementController extends Controller
 
         User::create([
             'name' => $request->name,
+            'cedula' => $request->cedula, // <--- NUEVO CAMPO
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'role' => 'barber',
             'activo' => $request->has('activo'),
+            
+            // Datos extra del perfil
             'specialty' => $request->specialty,
             'experience' => $request->experience,
             'bio' => $request->bio,
@@ -56,12 +60,14 @@ class BarberManagementController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'cedula' => 'required|string', // <--- NUEVO CAMPO
             'email' => 'required|email|unique:users,email,'.$id,
             'phone' => 'required|string',
         ]);
 
         $data = [
             'name' => $request->name,
+            'cedula' => $request->cedula, // <--- NUEVO CAMPO
             'email' => $request->email,
             'phone' => $request->phone,
             'activo' => $request->has('activo'),
