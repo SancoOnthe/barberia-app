@@ -21,8 +21,12 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
+        // NUEVOS CAMPOS AGREGADOS:
+        'cedula',
         'specialty',
+        'experience',
         'bio',
+        'activo',
     ];
 
     protected $hidden = [
@@ -33,5 +37,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'activo' => 'boolean', // Esto asegura que se guarde como true/false real
     ];
 }
