@@ -106,6 +106,31 @@
             </div>
         </div>
 
+        <div class="py-12 bg-gray-800 border-t border-gray-700">
+            <div class="max-w-3xl mx-auto px-4">
+                <h2 class="text-3xl font-bold text-white text-center mb-8">Contáctanos</h2>
+                
+                @if(session('status'))
+                    <div class="bg-green-500 text-white p-4 rounded mb-6 text-center">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <form action="{{ route('contact.send') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" name="name" placeholder="Tu Nombre" required class="w-full p-3 rounded bg-gray-900 text-white border border-gray-600 focus:border-yellow-500 outline-none">
+                        <input type="email" name="email" placeholder="Tu Email" required class="w-full p-3 rounded bg-gray-900 text-white border border-gray-600 focus:border-yellow-500 outline-none">
+                    </div>
+                    <textarea name="message" rows="4" placeholder="¿En qué podemos ayudarte?" required class="w-full p-3 rounded bg-gray-900 text-white border border-gray-600 focus:border-yellow-500 outline-none"></textarea>
+                    
+                    <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 rounded transition">
+                        Enviar Mensaje
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <footer class="bg-gray-800">
             <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
                 <div class="mt-8 md:mt-0 md:order-1">

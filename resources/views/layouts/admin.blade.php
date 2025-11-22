@@ -19,11 +19,26 @@
             @include('layouts.navigation')
 
             <!-- Header -->
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <h1 class="text-xl font-semibold text-gray-900 dark:text-gray-100">@yield('header-title')</h1>
+            <header class="admin-header">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 d-flex align-items-center gap-3">
+                            <h1 class="m-0 text-2xl"><i class="bi bi-scissors text-barber-gold"></i> BarberShop</h1>
+                        </div>
+                        <div class="col-md-6 d-flex justify-end">
+                            <h2 class="sr-only">@yield('header-title')</h2>
+                        </div>
+                    </div>
                 </div>
             </header>
+
+            <nav class="bg-white border-b border-gray-200 px-4 py-2">
+                <div class="container-fluid d-flex gap-2">
+                    <a href="{{ route('admin.panel') }}" class="nav-link-barber {{ request()->routeIs('admin.panel') ? 'active' : '' }}">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </div>
+            </nav>
 
             <!-- Content -->
             <main class="py-6">

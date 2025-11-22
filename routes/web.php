@@ -7,6 +7,10 @@ use App\Http\Controllers\AppointmentController; // <-- nueva importación si no 
 use App\Http\Controllers\BarberController; // <--- No olvides importar esto arriba
 use App\Http\Controllers\BarberManagementController; // <--- Agregamos el nuevo controlador para CRUD de barberos
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ClientManagementController; // <--- Importar arriba
+use App\Http\Controllers\ConfigController; // <--- Importar arriba
+use App\Http\Controllers\ScheduleController; // <--- Importar ScheduleController
+use App\Http\Controllers\MessageController; // <--- Importar MessageController
 use Illuminate\Support\Facades\Route;
 use App\Models\Service; // <--- Import importante para traer los servicios
 use Illuminate\Support\Facades\Auth; // <-- agrega esta importación si no existe
@@ -58,6 +62,26 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/appointments', [AppointmentController::class, 'index'])->name('admin.appointments.index');
     Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('admin.appointments.create');
     Route::post('/appointments', [AppointmentController::class, 'store'])->name('admin.appointments.store');
+
+    // CONFIGURACIÓN DEL SISTEMA
+    Route::get('/admin/configuracion', [ConfigController::class, 'index'])->name('admin.config.index');
+    Route::post('/admin/configuracion', [ConfigController::class, 'update'])->name('admin.config.update');
+
+    // GESTIÓN DE HORARIOS
+    Route::get('/admin/horarios', [ScheduleController::class, 'index'])->name('admin.schedules.index');
+    Route::post('/admin/horarios', [ScheduleController::class, 'store'])->name('admin.schedules.store');
+
+    // GESTIÓN DE CLIENTES
+    Route::get('/admin/clientes', [ClientManagementController::class, 'index'])->name('admin.clients.index');
+    Route::post('/admin/clientes', [ClientManagementController::class, 'store'])->name('admin.clients.store');
+    Route::put('/admin/clientes/{id}', [ClientManagementController::class, 'update'])->name('admin.clients.update');
+    Route::delete('/admin/clientes/{id}', [ClientManagementController::class, 'destroy'])->name('admin.clients.destroy');
+    
+    // GESTIÓN DE MENSAJES (Bandeja de Entrada)
+    Route::get('/admin/mensajes', [MessageController::class, 'index'])->name('admin.messages.index');
+    // Ruta especial para cambiar el estado (usamos PATCH porque es una modificación parcial)
+    Route::patch('/admin/mensajes/{id}/toggle', [MessageController::class, 'toggleRead'])->name('admin.messages.toggle');
+    Route::delete('/admin/mensajes/{id}', [MessageController::class, 'destroy'])->name('admin.messages.destroy');
 });
 
 // GRUPO DE RUTAS PARA BARBEROS
@@ -82,3 +106,24 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// RUTA PÚBLICA: Formulario de contacto en la web pública
+Route::post('/contact', function (Illuminate\Http\Request $request) {
+    // Validación básica
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email',
+        'message' => 'required',
+    ]);
+
+    // Crear el mensaje en la base de datos
+    \App\Models\Message::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'subject' => 'Contacto Web', // Asunto por defecto
+        'body' => $request->message,
+        'read' => false,
+    ]);
+
+    return back()->with('status', '¡Mensaje enviado! Te contactaremos pronto.');
+})->name('contact.send');

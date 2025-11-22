@@ -27,6 +27,7 @@ class User extends Authenticatable
         'experience',
         'bio',
         'activo',
+        'notes' // <--- NUEVO CAMPO PARA CLIENTES
     ];
 
     protected $hidden = [

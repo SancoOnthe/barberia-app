@@ -29,6 +29,21 @@
                         <x-nav-link :href="route('admin.appointments.index')" :active="request()->routeIs('admin.appointments.*')">
                             {{ __('Citas') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.messages.index')" :active="request()->routeIs('admin.messages.*')">
+                            <i class="bi bi-envelope"></i> {{ __('Mensajes') }}
+                        </x-nav-link>
+                            <x-nav-link :href="route('admin.config.index')" :active="request()->routeIs('admin.config.*')">
+                                <i class="bi bi-gear"></i> {{ __('Configuración') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.schedules.index')" :active="request()->routeIs('admin.schedules.*')">
+                                <i class="bi bi-calendar3"></i> {{ __('Horarios') }}
+                            </x-nav-link>
+                        <x-nav-link :href="route('admin.barbers.index')" :active="request()->routeIs('admin.barbers.*')">
+                            {{ __('Barberos') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.clients.index')" :active="request()->routeIs('admin.clients.*')">
+                            {{ __('Clientes') }}
+                        </x-nav-link>
                     </div>
                 @endif
             </div>
@@ -96,6 +111,21 @@
                 <x-responsive-nav-link :href="route('admin.appointments.index')" :active="request()->routeIs('admin.appointments.*')">
                     {{ __('Citas') }}
                 </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.messages.index')" :active="request()->routeIs('admin.messages.*')">
+                        <i class="bi bi-envelope"></i> {{ __('Mensajes') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.config.index')" :active="request()->routeIs('admin.config.*')">
+                        <i class="bi bi-gear"></i> {{ __('Configuración') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.schedules.index')" :active="request()->routeIs('admin.schedules.*')">
+                        <i class="bi bi-calendar3"></i> {{ __('Horarios') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.barbers.index')" :active="request()->routeIs('admin.barbers.*')">
+                        {{ __('Barberos') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.clients.index')" :active="request()->routeIs('admin.clients.*')">
+                        {{ __('Clientes') }}
+                    </x-responsive-nav-link>
             @endif
         </div>
 

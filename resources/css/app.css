@@ -1,3 +1,46 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.btn-barber {
+		@apply inline-flex items-center px-4 py-2 rounded-md font-semibold text-white bg-barber hover:bg-barber-hover transition;
+	}
+
+	.btn-barber-outline {
+		@apply inline-flex items-center px-4 py-2 rounded-md font-semibold text-barber-dark border border-barber hover:bg-barber hover:text-white transition;
+	}
+
+	.btn-icon {
+		@apply inline-flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100;
+	}
+
+	.stat-card {
+		@apply bg-barber-panel p-4 rounded-lg shadow-sm text-barber-dark;
+	}
+
+	.nav-link-barber {
+		@apply text-sm font-medium text-gray-700 hover:text-barber-dark;
+	}
+
+	.card {
+		@apply bg-white shadow rounded-lg p-4;
+	}
+
+	.badge-unread {
+		@apply inline-block bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full;
+	}
+
+	.form-field {
+		@apply block w-full rounded-md border-gray-200 shadow-sm focus:border-barber focus:ring focus:ring-barber/20;
+	}
+
+	.modal-backdrop {
+		@apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center;
+	}
+
+	.table-row-unread {
+		@apply bg-yellow-50;
+	}
+}
